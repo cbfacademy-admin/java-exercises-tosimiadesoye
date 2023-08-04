@@ -36,8 +36,8 @@ public class Car {
         this.year = year;
     }
 
-    @override
-    public String string() {
+    @Override
+    public String toString() {
         return "A" + make + " " + model + "from" + "(" + year + ")";
     }
 
