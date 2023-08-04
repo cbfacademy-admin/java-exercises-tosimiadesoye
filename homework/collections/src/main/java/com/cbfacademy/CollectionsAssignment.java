@@ -39,27 +39,16 @@ public class CollectionsAssignment {
      */
     public static boolean containsDuplicates(Collection<Integer> integers) {
         // Your solution must not use any loops.
+        int initialLength = integers.size();
+        Set<Integer> set = new HashSet<>(integers);
+        int newLength = set.size();
 
-        Set<Integer> set = new HashSet<>();
-        for (Integer element : integers) {
-            if (set.contains(element)) {
-                return true;
-            } else {
-                set.add(element);
-            }
+        if (initialLength == newLength) {
+            return false;
+        } else {
+            return true;
         }
-        return false;
-
-        // for (int i = 0; i < integers.size(); i++) {
-        // Integer element = ((List<Integer>) integers).get(i);
-        // if (set.contains(element)) {
-        // return true;
-        // } else {
-        // set.add(element);
-        // }
-
-        // }
-        // return false;
+     
     }
 
     /**

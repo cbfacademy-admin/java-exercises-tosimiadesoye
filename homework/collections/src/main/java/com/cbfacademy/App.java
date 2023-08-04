@@ -12,7 +12,9 @@ public class App {
 
         CollectionsAssignment collectionsAssignment = new CollectionsAssignment();
         List<String> list = Arrays.asList("Bob", "Alice", "Bob", "Carol", "Bob", "Jane");
+        List<Integer> list2 = Arrays.asList(8, 12, 4, 10, 13, 5, 2, 12, 11, 14);
         String mostFrequentString = collectionsAssignment.mostFrequent(list);
+        System.out.println(collectionsAssignment.containsDuplicates(list2));
         
     }
 }
