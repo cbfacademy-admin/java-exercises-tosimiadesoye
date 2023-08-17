@@ -9,7 +9,6 @@ public class Account {
     public Account(long accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-
     }
 
     public long getAccountNumber() {

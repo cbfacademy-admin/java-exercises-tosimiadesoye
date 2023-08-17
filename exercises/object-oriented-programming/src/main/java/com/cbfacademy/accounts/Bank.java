@@ -26,7 +26,7 @@ public class Bank {
      * @param interestRate   The interest rate for savings accounts.
      * @param overdraftLimit The overdraft limit for current accounts.
      */
-    public Bank(double interestRate, double overdraft) {
+    public Bank(double interestRate, double overdraftLimit) {
         this.interestRate = interestRate;
         this.overdraftLimit = overdraftLimit;
     }
