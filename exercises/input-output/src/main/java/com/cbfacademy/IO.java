@@ -2,16 +2,24 @@ package com.cbfacademy;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class IO {
 
@@ -29,7 +37,7 @@ public class IO {
             Files.copy(Paths.get(filename), new FileOutputStream(file2, false));
 
             while ((line = br.readLine()) != null) {
-                System.out.println(line);
+                // System.out.println(line);
             }
 
             writeFile(filename, file2);
@@ -40,6 +48,55 @@ public class IO {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    public void readFileContentUsingIO(String filePathString) {
+        Path filePath = FileSystems.getDefault().getPath(".", filePathString);
+
+        try {
+            byte[] byteArray = Files.readAllBytes(filePath);
+
+            String s = new String(byteArray, StandardCharsets.UTF_8);
+            // System.out.println(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void writeFileContentUsingIO(String filePathString) {
+        Path filePath = FileSystems.getDefault().getPath(".", filePathString);
+
+        try {
+            byte[] byteArray = Files.readAllBytes(filePath);
+            System.out.println();
+            Path writeFile = Files.write(filePath, byteArray);
+            // System.out.println(writeFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void readFileContentUsingIO2() {
+        String filePath = "exercises/input-output/src/main/resources/exercise.txt";
+
+        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+            stream.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void writeFileContentUsingIO2(String descPath, String sourcePath) {
+        try (Stream<String> stream = Files.lines(Paths.get(sourcePath))) {
+            Files.write(Paths.get(descPath), (Iterable<String>) stream::iterator,
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void writeFile(String filename, File file2) {
@@ -72,13 +129,15 @@ public class IO {
             for (int i = lines.size() - 1; i >= 0; i--) {
                 String line = lines.get(i);
                 StringBuffer buffer = new StringBuffer(line);
+                
                 buffer = buffer.reverse();
+                System.out.println("buffer" + buffer);
                 String reverseString = buffer.toString();
                 printWriter.println(reverseString);
             }
 
             printWriter.close();
-            System.out.println("File is copied successful!");
+            // System.out.println("File is copied successful!");
 
         } catch (IOException e) {
             System.out.println(e);
