@@ -1,11 +1,13 @@
 package com.cbfacademy;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.channels.FileChannel;
@@ -17,8 +19,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IO {
@@ -99,6 +103,42 @@ public class IO {
 
     }
 
+    public void invertFileContent(String sourcePath, String descPath) {
+        Path source = Paths.get(sourcePath);
+        Path desc = Paths.get(descPath);
+    //      Path source = Paths.get(sourcePath);
+    // Path desc = Paths.get(descPath);
+    // try {
+    //     List<String> lines = Files.readAllLines(source);
+    //     Collections.reverse(lines);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(descPath));) {
+
+            List<String> lines = Files.readAllLines(source);
+            Collections.reverse(lines);
+            System.out.println(lines);
+
+            Path newFile = Files.createFile(desc);
+            Files.write(newFile, lines);
+        } catch (IOException e) {
+            // TODO: handle exception
+        }
+
+        // try (Stream<String> stream = Files.lines(Paths.get(sourcePath))) {
+        // List<String> lines = stream.collect(Collectors.toList());
+
+        // for (int i = lines.size() - 1; i >= 0; i--) {
+        // String invertedString = new StringBuffer(lines.get(i)).reverse().toString();
+        // byte[] stringToByte = invertedString.getBytes(StandardCharsets.UTF_8);
+        // Files.write(Paths.get(descPath), stringToByte);
+        // }
+
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
+
+    }
+
     public void writeFile(String filename, File file2) {
 
         try {
@@ -129,7 +169,7 @@ public class IO {
             for (int i = lines.size() - 1; i >= 0; i--) {
                 String line = lines.get(i);
                 StringBuffer buffer = new StringBuffer(line);
-                
+
                 buffer = buffer.reverse();
                 System.out.println("buffer" + buffer);
                 String reverseString = buffer.toString();
